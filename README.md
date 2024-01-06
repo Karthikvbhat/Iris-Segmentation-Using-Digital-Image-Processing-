@@ -1,0 +1,2 @@
+The iris is a thin circular diaphragm, which lies between the cornea and the lens of the human eye.The iris is perforated close to its centre by a circular aperture known as the pupil. 
+The function of the iris is to control the amount of light entering through the pupil, and this is done by the sphincter and the dilator muscles, which adjust the size of the pupil.The average diameter of the iris is 12 mm, and the pupil size can vary from 10 to 80 percents of the iris diameter.
