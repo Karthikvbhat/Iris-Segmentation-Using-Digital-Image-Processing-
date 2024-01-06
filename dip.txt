@@ -1,0 +1,52 @@
+import cv2
+import numpy as np
+ 
+# Load the iris image
+image = cv2.imread('iris_image.jpg')
+
+
+# Convert the image to grayscale
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+image_equalize=cv2.equalizeHist(gray)
+
+# Apply Gaussian blur to reduce noise
+blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+edges = cv2.Canny(blurred, 50, 150)
+
+# Apply adaptive thresholding to segment the iris region
+thresh = cv2.adaptiveThreshold(blurred, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY_INV, 11, 2)
+
+# Find contours of the segmented iris region
+contours, hierarchy = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+# Sort the contours based on their area in descending order
+contours = sorted(contours, key=cv2.contourArea, reverse=True)
+
+# Select the largest contour as the iris region
+iris_contour = contours[0]
+
+# Create a mask image for the iris region
+mask = np.zeros_like(gray)
+cv2.drawContours(mask, [iris_contour], 0, 255, -1)
+
+# Apply the mask to the original image
+segmented_image = cv2.bitwise_and(image, image, mask=mask)
+
+
+# Display the segmented iris region
+cv2.imshow('Original image', image)
+cv2.imshow('Gray image', gray)
+
+cv2.imshow('enhanced image', image_equalize)
+
+
+cv2.imshow('Blurred image', blurred)
+cv2.imshow('canny edge',edges)
+cv2.imshow('Threshold image', thresh)
+
+cv2.imshow('Segmented Iris', segmented_image)
+cv2.imshow('Segmented Iris', segmented_image)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
